@@ -1,0 +1,25 @@
+{
+  "name": "10x-tester",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "tsx index.ts",
+    "test": "playwright test"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@ai-sdk/google": "1.2.10",
+    "ai": "4.3.5",
+    "dotenv": "16.5.0",
+    "zod": "3.24.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.51.1",
+    "@types/node": "22.14.0",
+    "tsx": "4.19.3",
+    "typescript": "5.8.3"
+  }
+}
