@@ -34,9 +34,7 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
       2. [Describe interaction, e.g., Click 'Sign In' / 'Login' button]
       ...
     ## Suggested Selectors:
-      - 'Username/Email' field: [Suggested selector strategy, e.g., [data-testid='username-input'] or label='Username']
-      - 'Password' field: [Suggested selector strategy, e.g., [data-testid='password-input'] or label='Password']
-      - 'Sign In' button: [Suggested selector strategy, e.g., [data-testid='login-button'] or role=button[name='Sign In']]
+      - Suggested selector strategy with dedicated selectors for each interacted element: data-testid='username-input'
       ... [List suggestions for all interacted elements in this scenario]
     ## Suggested Wait Conditions:
       - After clicking 'Sign In': [Suggested wait, e.g., waitForURL('**/app/dashboard') or waitForSelector('[data-testid=user-avatar]')]
@@ -52,6 +50,8 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
     ## Page Objects proposals:
       - [e.g., AuthenticationPage]
       - [e.g., ApplicationHomePage]
+      - Always infer PAGE_URL from the video - if not available, throw new Error("Page URL not recognized"))
+      - Always include "pageURL" in the Page Object to verify the page is loaded correctly
   </TEST_SCENARIO_1>
   ... [Additional TEST_SCENARIO blocks]
 
