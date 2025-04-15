@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "tsx index.ts",
+    "test": "tsx index.ts --video=data/10xcms.mov --outFile=data/test-plan.md",
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },

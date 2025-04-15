@@ -24,11 +24,14 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
 <TEST_PLAN>
   <TEST_SCENARIO_1>
     ## Objective: [Inferred objective description, e.g., Authenticate user]
-    ## Preconditions: [Any inferred setup needed, e.g., A valid user account must exist]
-    ## Steps taken by user:
-      1. [Navigate to entry page (URL if visible)]
-      2. [Describe interaction, e.g., Fill 'Username/Email' field with inferred placeholder]
-      3. [Describe interaction, e.g., Click 'Sign In' / 'Login' button]
+    ## Setup Steps:
+      - [List explicit actions needed before the main steps, e.g., "Ensure user 'testuser' exists via API call or UI setup", "Navigate to the login page '/login'"]
+      - [For steps requiring login: Suggest reusing authentication steps (e.g., via helper function/fixture) or session state (e.g., Playwright's storageState) if applicable, otherwise list UI steps.]
+      - [If the scenario builds on a previous one's state *within the same test file*, describe how to reach that state, e.g., "Create collection 'My Collection' using previous steps"]
+      - [If no setup is needed beyond starting at a base URL, state "None required besides navigating to the initial page."]
+    ## Steps taken by user (for the core objective):
+      1. [Describe interaction, e.g., Fill 'Username/Email' field with inferred placeholder]
+      2. [Describe interaction, e.g., Click 'Sign In' / 'Login' button]
       ...
     ## Suggested Selectors:
       - 'Username/Email' field: [Suggested selector strategy, e.g., [data-testid='username-input'] or label='Username']
@@ -60,10 +63,14 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
       - [SpecificFeature]Modal.ts: Handles interactions within modals for the feature. Key elements: form inputs, save/cancel buttons. Methods: fillForm(data), save().
       ... [Suggest POMs based on observed pages/components]
     ## Test Suites (Suggested):
-      - authentication.spec.ts: Contains authentication scenarios.
-      - [feature_one].spec.ts: Contains scenarios related to the first major feature observed.
-      - [feature_two].spec.ts: Contains scenarios related to the second major feature observed.
+      - authentication.spec.ts: Contains authentication scenarios. Should potentially generate session state (storageState.json) for reuse.
+      - [feature_one].spec.ts: Contains scenarios related to the first major feature observed. Could potentially reuse session state.
+      - [feature_two].spec.ts: Contains scenarios related to the second major feature observed. Could potentially reuse session state.
       ...
+    ## Shared Setup & Efficiency (Suggested):
+      - Consider using Playwright's storageState to save the session after login and reuse it in subsequent tests to speed up execution (e.g., run an auth.setup.ts first).
+      - Create helper functions or fixtures (e.g., in e2e/fixtures or e2e/utils) for common setup tasks like logging in (loginAsUser(page, username, password)) or creating prerequisite data via UI/API.
+      - Identify if API calls could replace lengthy UI setup steps for creating test data (though primarily focus on UI steps observed in the video).
     ## Test Suites Structure (Suggested):
       e2e
       ├── page-objects
@@ -95,7 +102,13 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
 
 Important considerations:
 - Ensure scenarios represent distinct user goals or workflows observed in the video.
-- Assume tests run independently. If setup is needed (e.g., creating prerequisite data), note it in Preconditions. Suggest using unique, timestamped names (e.g., item-${Date.now()}) for created entities to avoid test collisions.
+- Tests should strive for independence. Detail necessary setup actions explicitly in 'Setup Steps'. Suggest efficient setup strategies (session reuse via storageState, helper functions/fixtures, potential API calls) to avoid repeating slow UI actions like login in multiple tests.
+- Always use unique, timestamped names (e.g., "item-${Date.now()}") for created entities to avoid test collisions.
+- Use the following example for unique entity names (replace "user" with the actual entity name):
+
+GOOD: "user-${Date.now()}"
+BAD: "user"
+
 - Base all suggestions (selectors, waits, assertions, POMs) strictly on visual observation from the video. Clearly state when a suggestion relies heavily on inference.
 - The SELECTOR_REQUIREMENTS section is a critical communication tool to request necessary development changes for test stability. Be specific about which elements need stable identifiers.
 
