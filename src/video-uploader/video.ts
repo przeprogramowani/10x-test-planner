@@ -1,5 +1,5 @@
 import {GoogleGenAI, File, FileData} from "@google/genai";
-import {getCachedVideo, cacheVideo} from "./video-cache";
+import {getCachedVideo, cacheVideo} from "./video-cache.js";
 
 // Add FileState enum to match Gemini's file states
 enum FileState {
@@ -41,7 +41,7 @@ export async function uploadVideoWithCache(
   // Try to get from cache first
   const cachedMetadata = await getCachedVideo(pathToVideo);
   if (cachedMetadata) {
-    console.log("✨ Video found in cache - processing...");
+    console.log("👉 Video found in cache - processing...");
     return getFileData(cachedMetadata);
   }
 
@@ -68,12 +68,12 @@ async function uploadVideo(
   });
 
   if (!file.name) {
-    throw new Error("Failed to get file name from upload response");
+    throw new Error("❌ Failed to get file name from upload response");
   }
 
   const fileName = file.name; // Store the name to help TypeScript track the type
 
-  console.log("Processing uploaded video...");
+  console.log("👉 Processing uploaded video...");
   while (file.state === FileState.PROCESSING) {
     process.stdout.write(".");
     // Sleep for 5 seconds
@@ -83,9 +83,9 @@ async function uploadVideo(
   }
 
   if (file.state === FileState.FAILED) {
-    throw new Error("Video processing failed.");
+    throw new Error("❌ Video processing failed.");
   }
 
-  console.log(`\nFile ${file.name} is ready for inference as ${file.uri}`);
+  console.log(`\n👉 Video uploaded to ${file.uri}`);
   return file;
 }

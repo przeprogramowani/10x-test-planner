@@ -1,15 +1,30 @@
 import fs from "fs/promises";
 import {File} from "@google/genai";
 import path from "path";
+import os from "os";
 
-const CACHE_FILE = path.resolve(process.cwd(), "data", "video-cache.json");
+// Create a cache directory in the user's home directory
+const CACHE_DIR = path.join(os.tmpdir(), ".test-planner");
+const CACHE_FILE = path.join(CACHE_DIR, "video-cache.json");
 
 type VideoCache = Record<string, File>;
+
+/**
+ * Ensures the cache directory exists
+ */
+async function ensureCacheDir(): Promise<void> {
+  try {
+    await fs.mkdir(CACHE_DIR, {recursive: true});
+  } catch (err) {
+    // Ignore if directory already exists
+  }
+}
 
 /**
  * Loads the cache from disk, or returns an empty object if not found.
  */
 async function loadCache(): Promise<VideoCache> {
+  await ensureCacheDir();
   try {
     const data = await fs.readFile(CACHE_FILE, "utf-8");
     return JSON.parse(data);
@@ -25,6 +40,7 @@ async function loadCache(): Promise<VideoCache> {
  * Saves the cache to disk.
  */
 async function saveCache(cache: VideoCache): Promise<void> {
+  await ensureCacheDir();
   await fs.writeFile(CACHE_FILE, JSON.stringify(cache, null, 2), "utf-8");
 }
 

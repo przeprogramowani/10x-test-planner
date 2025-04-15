@@ -1,24 +1,29 @@
 import {FileData, GoogleGenAI} from "@google/genai";
-import {createTestPlanPrompt} from "./test-plan-prompt";
+import {createTestPlanPrompt} from "./test-plan-prompt.js";
 import fs from "fs/promises";
-import path from "path";
 
-const testPlanPath = path.resolve(process.cwd(), "data", "test-plan.txt");
-
-async function storeTestPlan(testPlan: string) {
-  await fs.writeFile(testPlanPath, testPlan);
+async function storeTestPlan(testPlan: string, outputPath: string) {
+  await fs.writeFile(outputPath, testPlan);
 }
 
 function extractTestPlan(testPlan: string) {
-  const testPlanRegex = /<test_plan>([\s\S]*?)<\/test_plan>/;
-  const testPlanMatch = testPlan.match(testPlanRegex);
+  // Try uppercased <TEST_PLAN> first
+  let testPlanRegex = /<TEST_PLAN>([\s\S]*?)<\/TEST_PLAN>/;
+  let testPlanMatch = testPlan.match(testPlanRegex);
+  if (testPlanMatch) {
+    return testPlanMatch[1];
+  }
+  // Try lowercased <test_plan>
+  testPlanRegex = /<test_plan>([\s\S]*?)<\/test_plan>/;
+  testPlanMatch = testPlan.match(testPlanRegex);
   return testPlanMatch ? testPlanMatch[1] : null;
 }
 
 export async function generateTestPlan(
   googleGenAi: GoogleGenAI,
   model: string,
-  videoMetadata: FileData
+  videoMetadata: FileData,
+  outputPath: string
 ): Promise<string> {
   console.log("📝 Generating test plan...");
   const testPlan = await googleGenAi.models.generateContent({
@@ -44,10 +49,10 @@ export async function generateTestPlan(
   const extractedTestPlan = extractTestPlan(testPlan.text);
 
   if (!extractedTestPlan) {
-    throw new Error("No test plan found within <test_plan> tags.");
+    throw new Error("No test plan found within <TEST_PLAN> tags.");
   }
 
-  await storeTestPlan(extractedTestPlan);
+  await storeTestPlan(extractedTestPlan, outputPath);
 
   return extractedTestPlan;
 }

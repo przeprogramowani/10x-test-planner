@@ -1,28 +1,50 @@
-# 10x-tester
+# Test Planner by 10xDevs
 
-## Overview
+![Test Plan](./docs/cover.jpg)
 
-10x-tester is a command line tool that generates a test plan for a given video of a user interacting with a web application. Made by [10xDevs](https://10xdevs.pl) to help with testing web applications.
+A Node-based CLI tool to generate test plans from video recordings using Google's Gemini models.
 
-## Usage
+Created test plan can be used as an input for Agentic AI model such Claude 3.7 Sonnet - it contains scenarios, steps and expected selectors to cover your project with E2E tests.
 
-```bash
-npx 10x-tester --video <path-to-video>
-```
-
-## Prerequisites
-
-- Node.js 22
-- Google API key - `GEMINI_API_KEY` in `.env` file
+All the [constraints](https://ai.google.dev/gemini-api/docs/vision?lang=node#prompting-video) of Google Generative AI models must be followed.
 
 ## Installation
 
 ```bash
-npm install
+npm install -g @10xdevspl/test-planner
 ```
 
 ## Usage
 
+### Using npx
+
 ```bash
-npm start
+npx @10xdevspl/test-planner --video=user-session.mov --outFile=test-plan.md
 ```
+
+### Environment Variables
+
+Include the following environment variable in your `.env` file or pass it as an argument:
+
+```
+GOOGLE_API_KEY=your_api_key_here
+```
+
+Generate it here - [Google AI Studio](https://aistudio.google.com/apikey)
+
+### Options
+
+- `--video` (required): Path to the video file to analyze
+- `--out`: Output path for the generated test plan (default: `test-plan.md`)
+- `--model`: Gemini model to use (default: `gemini-2.0-flash`)
+- `--optimize`: Optimize video using ffmpeg before processing (default: `false`)
+- `--fps`: Frames per second for optimized video (default: `15`, requires `--optimize`)
+
+## Requirements
+
+- Node.js 22 or higher
+- (Optional) If using the `--optimize` flag, ffmpeg must be installed on your system
+
+## License
+
+ISC

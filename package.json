@@ -1,22 +1,26 @@
 {
-  "name": "10x-tester",
-  "version": "1.0.0",
+  "name": "@10xdevspl/test-planner",
+  "version": "0.0.5",
   "main": "index.ts",
   "type": "module",
+  "bin": {
+    "test-planner": "./dist/index.js"
+  },
   "scripts": {
     "start": "tsx index.ts",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "CLI tool to generate test plans from video recordings using Google's Gemini models",
   "dependencies": {
     "@google/genai": "0.8.0",
+    "commander": "12.0.0",
     "dotenv": "16.5.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.51.1",
+    "@types/commander": "^2.12.2",
     "@types/node": "22.14.0",
     "tsx": "4.19.3",
     "typescript": "5.8.3"
