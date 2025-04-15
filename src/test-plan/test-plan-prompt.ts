@@ -24,6 +24,7 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
 <TEST_PLAN>
   <TEST_SCENARIO_1>
     ## Objective: [Inferred objective description, e.g., Authenticate user]
+    ## Test Group: [Group the scenario belongs to, e.g., "Authentication"]
     ## Setup Steps:
       - [List explicit actions needed before the main steps, e.g., "Ensure user 'testuser' exists via API call or UI setup", "Navigate to the login page '/login'"]
       - [For steps requiring login: Suggest reusing authentication steps (e.g., via helper function/fixture) or session state (e.g., Playwright's storageState) if applicable, otherwise list UI steps.]
@@ -33,19 +34,13 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
       1. [Describe interaction, e.g., Fill 'Username/Email' field with inferred placeholder]
       2. [Describe interaction, e.g., Click 'Sign In' / 'Login' button]
       ...
-    ## Suggested Selectors:
-      - Suggested selector strategy with dedicated selectors for each interacted element: data-testid='username-input'
-      ... [List suggestions for all interacted elements in this scenario]
-    ## Suggested Wait Conditions:
-      - After clicking 'Sign In': [Suggested wait, e.g., waitForURL('**/app/dashboard') or waitForSelector('[data-testid=user-avatar]')]
-      ...
-    ## Suggested Assertions:
-      - Verify navigation/URL change: [Suggested assertion, e.g., expect(page).toHaveURL(/.*\\/dashboard/)]
-      - Verify element visibility indicates success: [Suggested assertion, e.g., expect(page.locator('[data-testid=user-avatar]')).toBeVisible()]
-      ...
+    ## Selectors:
+      - [List selectors for this scenario]
+    ## Wait Conditions:
+      - [List wait conditions for this scenario]
+    ## Assertions:
+      - [List assertions for this scenario]
     ## Variables & Dynamic Data:
-      - login_credential: "<USER_PROVIDED_VALUE_OR_PLACEHOLDER>"
-      - password: "<HIDDEN>"
       - [Note on handling dynamic data if applicable]
     ## Page Objects proposals:
       - [e.g., AuthenticationPage]
@@ -56,29 +51,36 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
   ... [Additional TEST_SCENARIO blocks]
 
   <TEST_PLAN_OVERVIEW>
+    ## Playwright Configuration (Suggested):
+      - Create separate projects for authenticated and non-authenticated scenarios
+      - By default, use a single browser instance (chromium)
+
     ## Page Object Models (Suggested):
-      - AuthenticationPage.ts: Handles login/signup interactions. Key elements: credential inputs, submit button. Methods: login(user, pass).
       - BasePage.ts: Common elements/actions (header, footer, nav). Key elements: navigation links, user menu. Methods: logout(), navigateTo(section).
       - [SpecificFeature]Page.ts: Handles interactions for a major feature area. Key elements: data tables, action buttons. Methods: createItem(), searchForItem(term).
       - [SpecificFeature]Modal.ts: Handles interactions within modals for the feature. Key elements: form inputs, save/cancel buttons. Methods: fillForm(data), save().
       ... [Suggest POMs based on observed pages/components]
-    ## Test Suites (Suggested):
-      - authentication.spec.ts: Contains authentication scenarios. Should potentially generate session state (storageState.json) for reuse.
+
+      ## Test Suites (Suggested):
       - [feature_one].spec.ts: Contains scenarios related to the first major feature observed. Could potentially reuse session state.
       - [feature_two].spec.ts: Contains scenarios related to the second major feature observed. Could potentially reuse session state.
       ...
     ## Shared Setup & Efficiency (Suggested):
+
       - Consider using Playwright's storageState to save the session after login and reuse it in subsequent tests to speed up execution (e.g., run an auth.setup.ts first).
       - Create helper functions or fixtures (e.g., in e2e/fixtures or e2e/utils) for common setup tasks like logging in (loginAsUser(page, username, password)) or creating prerequisite data via UI/API.
-      - Identify if API calls could replace lengthy UI setup steps for creating test data (though primarily focus on UI steps observed in the video).
+      - Create util function for unique entity names (e.g., user-${Date.now()})
+
     ## Test Suites Structure (Suggested):
       e2e
       ├── page-objects
-      │   ├── AuthenticationPage.ts
+      │   ├── FeatureOnePage.ts
+      │   ├── FeatureTwoPage.ts
       │   ├── BasePage.ts
       │   └── ... [Other POM files]
       ├── tests
-      │   ├── authentication.spec.ts
+      │   ├── feature-one.spec.ts
+      │   ├── feature-two.spec.ts
       │   └── ... [Other spec files]
       ├── fixtures
       │   └── [e.g., user-roles.ts]
@@ -88,14 +90,7 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
 
   <SELECTOR_REQUIREMENTS>
     ## Imperative Selector Requirements for Developers:
-    To ensure stable test automation, please add/verify stable, unique selectors (preferably data-testid attributes) for the following key UI elements identified during analysis:
-    - Authentication Page - Credential Input: [Suggest attribute, e.g., data-testid='username-input']
-    - Authentication Page - Password Input: [Suggest attribute, e.g., data-testid='password-input']
-    - Authentication Page - Submit Button: [Suggest attribute, e.g., data-testid='login-submit-button']
-    - Main Navigation - Link to [Feature X]: [Suggest attribute, e.g., data-testid='nav-feature-x-link']
-    - Data Table on [Feature Y] Page - Rows: [Suggest attribute pattern, e.g., data-testid='item-row-{itemId}']
-    - Data Table on [Feature Y] Page - Action Button (Edit/Delete): [Suggest attribute within row, e.g., data-testid='edit-item-button']
-    - Generic Confirmation Modal - Confirm Button: [Suggest attribute, e.g., data-testid='confirm-dialog-confirm-button']
+    To ensure stable test automation, please recommend stable, unique selectors (strongly prefer data-testid attributes) for the following key UI elements identified during analysis:
     - ... [List all critical elements identified across scenarios needing stable selectors]
   </SELECTOR_REQUIREMENTS>
 </TEST_PLAN>
@@ -103,14 +98,13 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
 Important considerations:
 - Ensure scenarios represent distinct user goals or workflows observed in the video.
 - Tests should strive for independence. Detail necessary setup actions explicitly in 'Setup Steps'. Suggest efficient setup strategies (session reuse via storageState, helper functions/fixtures, potential API calls) to avoid repeating slow UI actions like login in multiple tests.
+- Base all suggestions (selectors, waits, assertions, POMs) strictly on visual observation from the video. Clearly state when a suggestion relies heavily on inference.
+- The SELECTOR_REQUIREMENTS section is a critical communication tool to request necessary development changes for test stability. Be specific about which elements need stable identifiers.
 - Always use unique, timestamped names (e.g., "item-${Date.now()}") for created entities to avoid test collisions.
 - Use the following example for unique entity names (replace "user" with the actual entity name):
 
 GOOD: "user-${Date.now()}"
 BAD: "user"
-
-- Base all suggestions (selectors, waits, assertions, POMs) strictly on visual observation from the video. Clearly state when a suggestion relies heavily on inference.
-- The SELECTOR_REQUIREMENTS section is a critical communication tool to request necessary development changes for test stability. Be specific about which elements need stable identifiers.
 
 Please begin your analysis now. Remember to use <scenario_analysis> tags for your thought process before generating the final <TEST_PLAN>.
 `;
