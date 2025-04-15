@@ -1,6 +1,6 @@
 {
   "name": "@10xdevspl/test-planner",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "index.ts",
   "type": "module",
   "bin": {
@@ -11,9 +11,13 @@
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },
-  "author": "",
+  "author": "10xDevs | Przeprogramowani.pl",
   "license": "ISC",
   "description": "CLI tool to generate test plans from video recordings using Google's Gemini models",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/przeprogramowani/10x-test-planner"
+  },
   "dependencies": {
     "@google/genai": "0.8.0",
     "commander": "12.0.0",
