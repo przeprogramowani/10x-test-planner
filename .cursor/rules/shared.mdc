@@ -1,0 +1,15 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Node
+
+- We're using Node 22
+- Always resolve paths in ESM module system
+- Prefer `fs/promises` over regular `fs`
+
+# TypeScript
+
+- We're using TypeScript 5.8
+- Prefer sound types over `any`

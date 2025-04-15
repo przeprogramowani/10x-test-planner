@@ -5,16 +5,15 @@
   "type": "module",
   "scripts": {
     "start": "tsx index.ts",
-    "test": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@ai-sdk/google": "1.2.10",
-    "ai": "4.3.5",
-    "dotenv": "16.5.0",
-    "zod": "3.24.2"
+    "@google/genai": "0.8.0",
+    "dotenv": "16.5.0"
   },
   "devDependencies": {
     "@playwright/test": "1.51.1",
