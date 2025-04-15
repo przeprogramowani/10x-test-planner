@@ -25,7 +25,7 @@ npm install -g @10xdevspl/test-planner
 ### Using npx
 
 ```bash
-npx @10xdevspl/test-planner --video=user-session.mov --outFile=test-plan.md
+npx @10xdevspl/test-planner --video=user-session.mov --outDir=./my-tests
 ```
 
 ### Environment Variables
@@ -40,11 +40,17 @@ Generate it here - [Google AI Studio](https://aistudio.google.com/apikey)
 
 ### Options
 
-- `--video` (required): Path to the video file to analyze
-- `--out`: Output path for the generated test plan (default: `test-plan.md`)
-- `--model`: Gemini model to use (default: `gemini-2.0-flash`)
+- `--video <path>` (required): Path to the video file to analyze
+- `--outDir <path>`: Output directory for the test plan (default: `./e2e`)
+- `--model <name>`: Gemini model to use (default: `gemini-2.0-flash`)
 - `--optimize`: Optimize video using ffmpeg before processing (default: `false`)
-- `--fps`: Frames per second for optimized video (default: `15`, requires `--optimize`)
+- `--fps <number>`: Frames per second for optimized video (default: `15`, requires `--optimize`)
+
+### Example Usage
+
+```bash
+npx @10xdevspl/test-planner --video=user-session.mov --outDir=./my-tests
+```
 
 ## Requirements
 
