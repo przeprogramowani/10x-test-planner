@@ -6,7 +6,6 @@ import {Command} from "commander";
 export interface CliOptions {
   video: string;
   outDir: string;
-  outFile: string;
   model: string;
   optimize: boolean;
   fps: number;
@@ -23,12 +22,7 @@ export function configureCli(): CliOptions {
     .description("Generate test plans from video recordings")
     .version("0.0.1")
     .requiredOption("--video <path>", "Path to the video file")
-    .option("--outDir <path>", "Output directory for the test plan", "./")
-    .option(
-      "--outFile <path>",
-      "Output filename for the test plan",
-      "test-plan.md"
-    )
+    .option("--outDir <path>", "Output directory for the test plan", "./e2e")
     .option("--model <name>", "Model to use", "gemini-2.0-flash")
     .option(
       "--optimize",

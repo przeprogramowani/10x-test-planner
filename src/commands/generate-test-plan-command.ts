@@ -4,8 +4,9 @@ import {CliOptions} from "../cli/options.js";
 import {createGenAiClient} from "../genai-client/create-client.js";
 import {uploadVideoWithCache} from "../video-uploader/video.js";
 import {generateTestPlan} from "../test-plan/test-plan.js";
+import {generateAgentRules} from "../agent-rules/agent-rules.js";
 import {optimizeVideo} from "../video-optimizer/video-optimizer.js";
-import {normalizePath, getOutputPath} from "../utils/path-utils.js";
+import {normalizePath, getOutputPaths} from "../utils/path-utils.js";
 
 /**
  * Process the video, optimizing it if requested
@@ -39,23 +40,27 @@ async function generateAndSaveTestPlan(
   const videoMetadata = await uploadVideoWithCache(googleGenAi, videoPath);
 
   // Determine output path
-  const outputPath = getOutputPath(options);
+  const outputPaths = getOutputPaths(options);
 
   const testPlan = await generateTestPlan(
     googleGenAi,
     options.model,
     videoMetadata,
-    outputPath
+    outputPaths.testPlan
   );
 
-  console.log("🔄 Test plan generated, saving to:", outputPath);
+  console.log("🔄 Test plan generated, saving to:", outputPaths.testPlan);
 
   // Ensure directory exists
-  const outDir = path.dirname(outputPath);
+  const outDir = path.dirname(outputPaths.testPlan);
   await fs.mkdir(outDir, {recursive: true});
 
   // Write test plan to file
-  await fs.writeFile(outputPath, testPlan);
+  await fs.writeFile(outputPaths.testPlan, testPlan);
+
+  // Generate and save agent rules
+  await generateAgentRules(outputPaths.agentRules);
+  console.log("✅ Agent rules saved!");
 }
 
 /**

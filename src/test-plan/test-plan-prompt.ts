@@ -25,14 +25,15 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
   <TEST_SCENARIO_1>
     ## Objective: [Inferred objective description, e.g., Authenticate user]
     ## Test Group: [Group the scenario belongs to, e.g., "Authentication"]
+    ## Dependencies:
+      - [i.e. Authentication setup OR none]
     ## Setup Steps:
-      - [List explicit actions needed before the main steps, e.g., "Ensure user 'testuser' exists via API call or UI setup", "Navigate to the login page '/login'"]
-      - [For steps requiring login: Suggest reusing authentication steps (e.g., via helper function/fixture) or session state (e.g., Playwright's storageState) if applicable, otherwise list UI steps.]
-      - [If the scenario builds on a previous one's state *within the same test file*, describe how to reach that state, e.g., "Create collection 'My Collection' using previous steps"]
+      - [List explicit actions needed before the main steps]
       - [If no setup is needed beyond starting at a base URL, state "None required besides navigating to the initial page."]
     ## Steps taken by user (for the core objective):
       1. [Describe interaction, e.g., Fill 'Username/Email' field with inferred placeholder]
       2. [Describe interaction, e.g., Click 'Sign In' / 'Login' button]
+      3. [Describe assertions, e.g., Assert that the user is redirected to the home page]
       ...
     ## Selectors:
       - [List selectors for this scenario]
@@ -51,9 +52,6 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
   ... [Additional TEST_SCENARIO blocks]
 
   <TEST_PLAN_OVERVIEW>
-    ## Playwright Configuration (Suggested):
-      - Create separate projects for authenticated and non-authenticated scenarios
-      - By default, use a single browser instance (chromium)
 
     ## Page Object Models (Suggested):
       - BasePage.ts: Common elements/actions (header, footer, nav). Key elements: navigation links, user menu. Methods: logout(), navigateTo(section).
@@ -62,14 +60,9 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
       ... [Suggest POMs based on observed pages/components]
 
       ## Test Suites (Suggested):
-      - [feature_one].spec.ts: Contains scenarios related to the first major feature observed. Could potentially reuse session state.
-      - [feature_two].spec.ts: Contains scenarios related to the second major feature observed. Could potentially reuse session state.
+      - [feature_one].spec.ts: Contains scenarios related to the first major feature observed.
+      - [feature_two].spec.ts: Contains scenarios related to the second major feature observed.
       ...
-    ## Shared Setup & Efficiency (Suggested):
-
-      - Consider using Playwright's storageState to save the session after login and reuse it in subsequent tests to speed up execution (e.g., run an auth.setup.ts first).
-      - Create helper functions or fixtures (e.g., in e2e/fixtures or e2e/utils) for common setup tasks like logging in (loginAsUser(page, username, password)) or creating prerequisite data via UI/API.
-      - Create util function for unique entity names (e.g., user-${Date.now()})
 
     ## Test Suites Structure (Suggested):
       e2e
