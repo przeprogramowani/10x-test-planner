@@ -1,6 +1,12 @@
 # Test Planner by 10xDevs
 
-![Test Plan](./docs/cover.jpg)
+```bash
+ _____         _     ____  _
+|_   _|__  ___| |_  |  _ \| | __ _ _ __  _ __   ___ _ __
+  | |/ _ \/ __| __| | |_) | |/ _` | '_ \| '_ \ / _ \ '__|
+  | |  __/\__ \ |_  |  __/| | (_| | | | | | | |  __/ |
+  |_|\___||___/\__| |_|   |_|\__,_|_| |_|_| |_|\___|_|
+```
 
 A Node-based CLI tool to generate test plans from video recordings using Google's Gemini models.
 
