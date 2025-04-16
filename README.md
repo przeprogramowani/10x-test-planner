@@ -28,7 +28,7 @@ npm install -g @10xdevspl/test-planner
 npx @10xdevspl/test-planner --video=user-session.mov --outDir=./my-tests
 ```
 
-### Environment Variables
+### Authentication
 
 Include the following environment variable in your `.env` file or pass it as an argument:
 
@@ -45,12 +45,6 @@ Generate it here - [Google AI Studio](https://aistudio.google.com/apikey)
 - `--model <name>`: Gemini model to use (default: `gemini-2.0-flash`)
 - `--optimize`: Optimize video using ffmpeg before processing (default: `false`)
 - `--fps <number>`: Frames per second for optimized video (default: `15`, requires `--optimize`)
-
-### Example Usage
-
-```bash
-npx @10xdevspl/test-planner --video=user-session.mov --outDir=./my-tests
-```
 
 ## Requirements
 
