@@ -51,6 +51,40 @@ Generate it here - [Google AI Studio](https://aistudio.google.com/apikey)
 - Node.js 22 or higher
 - (Optional) If using the `--optimize` flag, ffmpeg must be installed on your system
 
+## Output
+
+The library generates a test plan, followed by Playwright bootstrap and rules for AI.
+
+- `test-plan.md` - the main test plan file
+- `project-checklist.md` - initial configuration of Playwright projects
+- `agent-rules.md` - rules for AI to follow
+
+Example scenario based on the video:
+
+```xml
+<TEST_SCENARIO_1>
+  ## Objective: Authenticate User
+  ## Test Group: Authentication
+  ## Dependencies / Preconditions:
+    - User account "10xadmin" must exist.
+    - User must be logged out.
+  ## Setup Steps (if needed beyond starting page):
+    - None required beyond navigating to the initial page.
+  ## Test Suite: authentication.auth.spec.ts
+  ## User Workflow Steps:
+    1. Navigate to the login page (localhost:3000/login).
+    2. Enter valid username "10xadmin" into the username field.
+    3. Enter valid password <HIDDEN> into the password field.
+    4. Click the 'Login' button.
+  ## Expected Outcomes / Assertions:
+    - User is redirected to the main dashboard (localhost:3000/home).
+  ## Dynamic Data Considerations:
+    - None.
+  ## Potential Challenges:
+    - None.
+</TEST_SCENARIO_1>
+```
+
 ## License
 
 ISC
