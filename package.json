@@ -6,6 +6,10 @@
   "bin": {
     "test-planner": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "*.md"
+  ],
   "scripts": {
     "start": "tsx index.ts",
     "test": "tsx index.ts --video=data/10xcms.mov --outDir=./data",
