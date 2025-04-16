@@ -2,12 +2,12 @@ import {loadPromptFromFile} from "../utils/prompt-utils.js"; // Use .js extensio
 
 const projectChecklistPromptContent = await loadPromptFromFile(
   import.meta.url,
-  "./prompt-project-checklist.md"
+  "../prompts/prompt-project-checklist.md"
 );
 
 const agentRulesPromptContent = await loadPromptFromFile(
   import.meta.url,
-  "./prompt-agent-rules.md"
+  "../prompts/prompt-agent-rules.md"
 );
 
 export const createProjectChecklistPrompt = (): string =>
