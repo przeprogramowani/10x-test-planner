@@ -46,12 +46,12 @@ Generate it here - [Google AI Studio](https://aistudio.google.com/apikey)
 - `--optimize`: Optimize video using ffmpeg before processing (default: `false`)
 - `--fps <number>`: Frames per second for optimized video (default: `15`, requires `--optimize`)
 
-## Requirements
+### Requirements
 
 - Node.js 22 or higher
 - (Optional) If using the `--optimize` flag, ffmpeg must be installed on your system
 
-## Output
+## Test Plan Structure
 
 The library generates a test plan, followed by Playwright bootstrap and rules for AI.
 
@@ -84,6 +84,13 @@ Example scenario based on the video:
     - None.
 </TEST_SCENARIO_1>
 ```
+
+For the best results, always attach `agent-rules.md` to prompts that you use to create final test suites.
+
+### Recommended models for test suite generation
+
+- `gemini-2.5-pro`
+- `claude-3-7-sonnet`
 
 ## License
 
