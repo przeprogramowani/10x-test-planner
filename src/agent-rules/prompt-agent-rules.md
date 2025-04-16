@@ -10,7 +10,7 @@ Follow this methodical process for each test scenario defined in the plan:
     *   **E2E Code Review (`e2e/`):** Next, search the existing test codebase (`./e2e/`) for potentially reusable page objects, test steps, fixtures, or utility functions related to the current scenario. Prioritize reusing existing E2E code when suitable.
 
 2.  **Introduce/Refine Selectors:**
-    *   Based on the test plan's `SELECTOR_REQUIREMENTS` and your analysis of the application (if running), identify or introduce stable, high-quality test selectors (prefer `data-testid`) for all elements involved in the scenario's interactions and assertions.
+    *   Based on the test plan's `SELECTOR_REQUIREMENTS` and your analysis of the application (if running), identify or introduce stable, high-quality test selectors (always use `data-testid` attribute) for all elements involved in the scenario's interactions and assertions.
     *   If modifying existing components/pages, add the necessary selectors there.
 
 3.  **Introduce/Update Page Object Models (POMs):**
@@ -21,11 +21,13 @@ Follow this methodical process for each test scenario defined in the plan:
 
 4.  **Update Configuration & Setup (If Necessary):**
     *   If the scenario requires authentication or specific setup steps (as noted in the test plan dependencies):
-        *   Check `playwright.config.ts` for existing authentication setup (`auth.setup.ts`, `storageState`, projects).
         *   Adjust or create the necessary setup files (e.g., in `./e2e/setup/` or `./e2e/fixtures/`) and configure the `playwright.config.ts` projects accordingly (see example).
         *   Ensure the new test suite (`.spec.ts`) is matched by the correct project (e.g., "authenticated" or "non-authenticated").
 
 5.  **Implement Test Suite (`.spec.ts` file):**
+    *   Based on the test suite preconditions, use either `{name}.auth.spec.ts` or `{name}.noauth.spec.ts` file name.
+    *   The `{name}.noauth.spec.ts` suites do not reuse existing session (i.e. login, landing page, anonymous user).
+    *   The `{name}.auth.spec.ts` suites reuse existing session - be mindful of this when writing the test case(s).
     *   Locate the relevant existing test suite file (`./e2e/tests/`) based on the test plan suggestions or create a new one if needed.
     *   Write the test case(s) for the scenario using the defined POMs and selectors.
     *   Always follow requirements for test suites and test files - do not deviate from the provided structure and guidelines.

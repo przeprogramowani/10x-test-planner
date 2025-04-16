@@ -3,6 +3,7 @@ import {CliOptions} from "../cli/options.js";
 
 export interface OutputPaths {
   testPlan: string;
+  projectChecklist: string;
   agentRules: string;
 }
 
@@ -21,8 +22,10 @@ export function normalizePath(filePath: string): string {
  * @returns Absolute path for the output file
  */
 export function getOutputPaths(options: CliOptions): OutputPaths {
+  const basePath = normalizePath(options.outDir);
   return {
-    testPlan: path.join(normalizePath(options.outDir), "test-plan.md"),
-    agentRules: path.join(normalizePath(options.outDir), "agent-rules.md"),
+    testPlan: path.join(basePath, "test-plan.md"),
+    projectChecklist: path.join(basePath, "project-checklist.md"),
+    agentRules: path.join(basePath, "agent-rules.md"),
   };
 }

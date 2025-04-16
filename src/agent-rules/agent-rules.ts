@@ -1,18 +1,19 @@
 import fs from "fs/promises";
-import {createTestRulesPrompt} from "./agent-rules-prompt.js";
+import {
+  createAgentRulesPrompt,
+  createProjectChecklistPrompt,
+} from "./create-rules.js";
 
-/**
- * Generates agent rules and saves them to a file
- * @param outputPath The path where agent rules should be saved
- * @returns The agent rules content
- */
-export async function generateAgentRules(outputPath: string): Promise<string> {
+export async function generateAgentRules(
+  projectChecklistPath: string,
+  agentRulesPath: string
+): Promise<string> {
   console.log("📝 Generating agent rules...");
 
-  const agentRules = createTestRulesPrompt();
+  const agentRules = createAgentRulesPrompt();
+  const projectChecklist = createProjectChecklistPrompt();
 
-  // Store the rules to the specified file
-  await fs.writeFile(outputPath, agentRules);
-
+  await fs.writeFile(projectChecklistPath, projectChecklist);
+  await fs.writeFile(agentRulesPath, agentRules);
   return agentRules;
 }

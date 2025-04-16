@@ -49,8 +49,6 @@ async function generateAndSaveTestPlan(
     outputPaths.testPlan
   );
 
-  console.log("🔄 Test plan generated, saving to:", outputPaths.testPlan);
-
   // Ensure directory exists
   const outDir = path.dirname(outputPaths.testPlan);
   await fs.mkdir(outDir, {recursive: true});
@@ -59,7 +57,10 @@ async function generateAndSaveTestPlan(
   await fs.writeFile(outputPaths.testPlan, testPlan);
 
   // Generate and save agent rules
-  await generateAgentRules(outputPaths.agentRules);
+  await generateAgentRules(
+    outputPaths.projectChecklist,
+    outputPaths.agentRules
+  );
   console.log("✅ Agent rules saved!");
 }
 

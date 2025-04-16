@@ -25,6 +25,7 @@ After analyzing all scenarios, compile your findings into a structured TEST_PLAN
     ## Setup Steps (if needed beyond starting page):
       - [High-level setup actions required, e.g., "Ensure at least one product exists"]
       - [If none, state "None required beyond navigating to the initial page."]
+    ## Test Suite: {name}.auth.spec.ts or {name}.noauth.spec.ts - whether the test suite requires authenticated user or not
     ## User Workflow Steps:
       1. [User action, e.g., Navigate to the login page]
       2. [User action, e.g., Enter valid username into the username field]
