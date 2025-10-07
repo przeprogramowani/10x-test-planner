@@ -27,6 +27,7 @@ dist-ssr
 # Environment Variables
 .env
 .env.*
+!.env.example
 
 # Playwright
 /test-results/
@@ -35,5 +36,6 @@ dist-ssr
 /playwright/.cache/
 
 # Data
-data/
+!data/10xcms.mp4
+data/*.md
 src/video-uploader/video-cache.json

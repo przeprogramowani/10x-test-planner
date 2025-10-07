@@ -23,7 +23,7 @@ export function configureCli(): CliOptions {
     .version("0.0.1")
     .requiredOption("--video <path>", "Path to the video file")
     .option("--outDir <path>", "Output directory for the test plan", "./e2e")
-    .option("--model <name>", "Model to use", "gemini-2.0-flash")
+    .option("--model <name>", "Model to use", "gemini-2.5-flash")
     .option(
       "--optimize",
       "Optimize video using ffmpeg before processing",

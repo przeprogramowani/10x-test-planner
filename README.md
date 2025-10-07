@@ -10,7 +10,7 @@
 
 A Node-based CLI tool to generate test plans from video recordings using Google's Gemini models.
 
-Created test plan can be used as an input for Agentic AI model such Claude 3.7 Sonnet - it contains scenarios, steps and expected selectors to cover your project with E2E tests.
+Created test plan can be used as an input for Agentic AI models - it contains scenarios, steps and expected selectors to cover your project with E2E tests.
 
 All the [constraints](https://ai.google.dev/gemini-api/docs/vision?lang=node#prompting-video) of Google Generative AI models must be followed.
 
@@ -42,7 +42,7 @@ Generate it here - [Google AI Studio](https://aistudio.google.com/apikey)
 
 - `--video <path>` (required): Path to the video file to analyze
 - `--outDir <path>`: Output directory for the test plan (default: `./e2e`)
-- `--model <name>`: Gemini model to use (default: `gemini-2.0-flash`)
+- `--model <name>`: Gemini model to use (default: `gemini-2.5-flash`)
 - `--optimize`: Optimize video using ffmpeg before processing (default: `false`)
 - `--fps <number>`: Frames per second for optimized video (default: `15`, requires `--optimize`)
 
@@ -90,7 +90,7 @@ For the best results, always attach `agent-rules.md` to prompts that you use to 
 ### Recommended models for test suite generation
 
 - `gemini-2.5-pro`
-- `claude-3-7-sonnet`
+- `claude-sonnet-4.5`
 
 ## License
 

@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "start": "tsx index.ts",
-    "test": "tsx index.ts --video=data/10xcms.mov --outDir=./data",
+    "test": "tsx index.ts --video=data/10xcms.mp4 --outDir=./data",
     "copy-md": "cp -R src/prompts dist/src",
     "build": "tsc && npm run copy-md",
     "prepublishOnly": "npm run build",
